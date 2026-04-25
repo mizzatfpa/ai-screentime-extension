@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Screentime</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <span class="header-title">AI Screentime</span>
+      <span class="header-date" id="header-date"></span>
+    </header>
+
+    <div class="total-card">
+      <div class="total-label">Today's Total</div>
+      <div class="total-time" id="total-time">0h 0m</div>
+    </div>
+
+    <div class="platform-list" id="platform-list"></div>
+
+    <div class="weekly-section">
+      <div class="section-label">Last 7 Days</div>
+      <div class="bar-chart" id="bar-chart"></div>
+    </div>
+
+    <footer class="footer">
+      <button class="reset-btn" id="reset-btn">Reset Today</button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
