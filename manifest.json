@@ -3,7 +3,7 @@
   "name": "AI Screentime",
   "version": "1.0.0",
   "description": "Track your time on ChatGPT, Gemini, Claude, and Grok.",
-  "permissions": ["tabs", "storage", "alarms", "activeTab", "scripting"],
+  "permissions": ["tabs", "storage", "alarms"],
   "host_permissions": [
     "https://chatgpt.com/*",
     "https://chat.openai.com/*",
