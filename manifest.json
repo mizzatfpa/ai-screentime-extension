@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "AI Screentime",
+  "version": "1.0.0",
+  "description": "Track your time on ChatGPT, Gemini, Claude, and Grok.",
+  "permissions": ["tabs", "storage", "alarms", "activeTab", "scripting"],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*",
+    "https://gemini.google.com/*",
+    "https://claude.ai/*",
+    "https://x.ai/*",
+    "https://grok.com/*"
+  ],
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  }
+}
