@@ -218,45 +218,16 @@ button {
   width: 22px;
   height: 22px;
   align-self: center;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 7px;
 }
 
-.platform-logo svg {
+.platform-logo img {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.platform-logo--chatgpt {
-  width: 24px;
-  height: 24px;
-  background: #10a37f;
-  border-radius: 8px;
-  color: #fff;
-  font-family: var(--font-serif);
-  font-size: 20px;
-  line-height: 1;
-}
-
-.platform-logo--claude {
-  width: 24px;
-  height: 24px;
-  background: linear-gradient(145deg, #f47b53 0%, #dd552f 100%);
-  border-radius: 8px;
-  color: #171717;
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0;
-}
-
-.platform-logo--gemini {
-  color: #6b87ff;
-}
-
-.platform-logo--grok {
-  width: 24px;
-  height: 24px;
-  background: #0e0e0e;
-  border-radius: 8px;
+  object-fit: contain;
 }
 
 .platform-content {
