@@ -6,13 +6,9 @@ The extension stores all data locally with `chrome.storage.local`. It does not s
 
 ## Screenshots
 
-### Today
-
-![Today screentime dashboard](assets/today.png)
-
-### Previous Day
-
-![Friday screentime dashboard](assets/friday.png)
+| Today | Previous Day |
+|---|---|
+| ![Today screentime dashboard](assets/today.png) | ![Friday screentime dashboard](assets/friday.png) |
 
 ## Features
 
