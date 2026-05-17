@@ -231,7 +231,7 @@ function renderWeeklyChart(screentime) {
   days.forEach((dateKey, index) => {
     const total = totals[index];
     const heightPct = (total / maxTotal) * 100;
-    const fillHeight = Math.max(heightPct * 0.82, total > 0 ? 10 : 0);
+    const fillHeight = Math.max(heightPct * 0.32, total > 0 ? 5 : 0);
     const isToday = dateKey === today;
     const isSelected = dateKey === selectedDateKey;
 

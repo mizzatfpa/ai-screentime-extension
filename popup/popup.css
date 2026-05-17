@@ -29,8 +29,10 @@ html {
 }
 
 body {
-  width: 430px;
-  min-height: 760px;
+  width: 320px;
+  height: 460px;
+  min-height: 460px;
+  overflow: hidden;
   background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -45,61 +47,62 @@ button {
 
 .container {
   position: relative;
-  min-height: 760px;
-  padding: 38px 28px 30px;
+  height: 460px;
+  min-height: 460px;
+  padding: 10px 14px;
   overflow: hidden;
   background:
     radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.94), transparent 32%),
     linear-gradient(145deg, #fffefa 0%, #f8f5ef 100%);
   border: 1px solid #ebe7df;
-  border-radius: 30px;
+  border-radius: 22px;
 }
 
 .rainbow-doodle {
   position: absolute;
-  top: 28px;
-  left: 34px;
-  width: 48px;
-  height: 25px;
+  top: 10px;
+  left: 18px;
+  width: 28px;
+  height: 15px;
 }
 
 .rainbow-doodle span {
   position: absolute;
   right: 0;
   bottom: 0;
-  border: 3px solid var(--orange);
+  border: 2px solid var(--orange);
   border-bottom: 0;
-  border-radius: 48px 48px 0 0;
+  border-radius: 34px 34px 0 0;
 }
 
 .rainbow-doodle span:nth-child(1) {
-  width: 48px;
-  height: 25px;
+  width: 28px;
+  height: 15px;
 }
 
 .rainbow-doodle span:nth-child(2) {
-  right: 7px;
-  width: 34px;
-  height: 18px;
+  right: 4px;
+  width: 20px;
+  height: 11px;
 }
 
 .rainbow-doodle span:nth-child(3) {
-  right: 14px;
-  width: 20px;
-  height: 11px;
+  right: 8px;
+  width: 12px;
+  height: 7px;
 }
 
 .header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 55px 4px 32px;
+  padding: 20px 2px 8px;
 }
 
 .header-title {
   color: var(--text-primary);
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -108,31 +111,31 @@ button {
 .header-date {
   padding-bottom: 2px;
   color: #4b4a4e;
-  font-size: 18px;
+  font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .day-nav {
   display: grid;
-  grid-template-columns: 84px 1fr 84px;
+  grid-template-columns: 52px 1fr 52px;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-  padding: 12px;
+  gap: 7px;
+  margin-bottom: 6px;
+  padding: 6px;
   background: rgba(255, 255, 255, 0.42);
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: 16px;
 }
 
 .day-nav-btn {
-  height: 46px;
+  height: 27px;
   background: rgba(255, 255, 255, 0.62);
   border: 1px solid var(--border-strong);
-  border-radius: 12px;
+  border-radius: 9px;
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 16px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -150,7 +153,7 @@ button {
 
 .day-nav-date {
   color: var(--text-primary);
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 700;
   text-align: center;
 }
@@ -160,29 +163,29 @@ button {
 .weekly-section {
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid #e1ded8;
-  border-radius: var(--radius-lg);
-  box-shadow: 0 14px 28px rgba(20, 20, 20, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(20, 20, 20, 0.07);
 }
 
 .total-card {
-  margin-bottom: 18px;
-  padding: 24px 22px 26px;
+  margin-bottom: 6px;
+  padding: 8px 12px 9px;
 }
 
 .total-label,
 .section-label {
   color: #4d4c50;
-  font-size: 16px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 0;
   text-transform: uppercase;
 }
 
 .total-time {
-  margin-top: 14px;
+  margin-top: 2px;
   color: var(--text-primary);
   font-family: var(--font-serif);
-  font-size: 76px;
+  font-size: 34px;
   font-weight: 400;
   letter-spacing: 0;
   line-height: 0.95;
@@ -192,16 +195,16 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin-bottom: 18px;
-  padding: 18px 20px;
+  margin-bottom: 6px;
+  padding: 4px 12px;
 }
 
 .platform-row {
   display: grid;
-  grid-template-columns: 48px 1fr;
-  column-gap: 18px;
-  min-height: 62px;
-  padding: 10px 0 14px;
+  grid-template-columns: 30px 1fr;
+  column-gap: 10px;
+  min-height: 30px;
+  padding: 4px 0;
 }
 
 .platform-row + .platform-row {
@@ -212,8 +215,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 22px;
+  height: 22px;
   align-self: center;
 }
 
@@ -224,23 +227,23 @@ button {
 }
 
 .platform-logo--chatgpt {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   background: #10a37f;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #fff;
   font-family: var(--font-serif);
-  font-size: 28px;
+  font-size: 20px;
   line-height: 1;
 }
 
 .platform-logo--claude {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   background: linear-gradient(145deg, #f47b53 0%, #dd552f 100%);
-  border-radius: 9px;
+  border-radius: 8px;
   color: #171717;
-  font-size: 22px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0;
 }
@@ -250,34 +253,34 @@ button {
 }
 
 .platform-logo--grok {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   background: #0e0e0e;
-  border-radius: 9px;
+  border-radius: 8px;
 }
 
 .platform-content {
   display: grid;
   grid-template-columns: 1fr auto;
-  row-gap: 12px;
+  row-gap: 4px;
   align-items: center;
 }
 
 .platform-name {
   color: var(--text-primary);
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 700;
 }
 
 .platform-time {
   color: var(--text-secondary);
-  font-size: 17px;
+  font-size: 12px;
   font-weight: 500;
 }
 
 .platform-bar-track {
   grid-column: 1 / -1;
-  height: 5px;
+  height: 3px;
   overflow: hidden;
   background: var(--track);
   border-radius: 999px;
@@ -291,16 +294,16 @@ button {
 }
 
 .weekly-section {
-  margin-bottom: 24px;
-  padding: 22px 20px 20px;
+  margin-bottom: 6px;
+  padding: 8px 12px;
 }
 
 .bar-chart {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  height: 120px;
-  margin-top: 18px;
+  gap: 5px;
+  height: 48px;
+  margin-top: 6px;
 }
 
 .bar-col {
@@ -308,7 +311,7 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 4px;
   min-width: 0;
   padding: 0;
   background: none;
@@ -319,8 +322,8 @@ button {
 
 .bar-col-inner {
   position: relative;
-  width: 42px;
-  height: 82px;
+  width: 22px;
+  height: 32px;
   overflow: hidden;
   background: linear-gradient(180deg, #e9f5ff 0%, #dff0ff 100%);
   border-radius: 8px;
@@ -349,7 +352,7 @@ button {
 
 .bar-col-day {
   color: #1c1c1e;
-  font-size: 13px;
+  font-size: 9px;
   font-weight: 500;
   text-transform: uppercase;
 }
@@ -357,7 +360,7 @@ button {
 .footer {
   display: flex;
   justify-content: center;
-  padding: 0 0 8px;
+  padding: 0;
 }
 
 .reset-btn {
@@ -365,14 +368,14 @@ button {
   align-items: center;
   justify-content: center;
   gap: 18px;
-  width: 270px;
-  height: 52px;
+  width: 190px;
+  height: 32px;
   background: rgba(255, 255, 255, 0.38);
   border: 1px solid var(--border-strong);
-  border-radius: var(--radius-md);
+  border-radius: 12px;
   color: #26262a;
   cursor: pointer;
-  font-size: 17px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -383,28 +386,28 @@ button {
 
 .reset-mark {
   position: relative;
-  width: 26px;
-  height: 26px;
+  width: 19px;
+  height: 19px;
 }
 
 .reset-mark::before,
 .reset-mark::after {
   position: absolute;
   content: "";
-  border: 2px solid var(--orange);
+  border: 1.5px solid var(--orange);
   transform: rotate(45deg);
 }
 
 .reset-mark::before {
-  top: 7px;
-  left: 8px;
-  width: 12px;
-  height: 12px;
+  top: 5px;
+  left: 6px;
+  width: 9px;
+  height: 9px;
 }
 
 .reset-mark::after {
-  top: 1px;
+  top: 0;
   right: 0;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
