@@ -106,6 +106,49 @@ function getDayTotal(dayData) {
   return Object.values(dayData).reduce((acc, value) => acc + value, 0);
 }
 
+function getPlatformIcon(platformKey) {
+  if (platformKey === "chatgpt") {
+    return `
+      <span class="platform-logo platform-logo--chatgpt" aria-hidden="true">
+        <svg viewBox="0 0 48 48" role="img">
+          <g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 8c5.6 0 8.8 3.1 9.8 7.4l-9.7 5.6-9.9-5.7C15.4 11.1 18.8 8 24 8Z"/>
+            <path d="M37.4 17.5c2.8 4.8 1.6 9.1-1.6 12.1l-9.8-5.7v-11.4c4.3-1 8.8.4 11.4 5Z"/>
+            <path d="M35.1 33.8c-2.8 4.8-7.1 6-11.3 4.7V27.2l9.8-5.7c3 3.1 4 7.7 1.5 12.3Z"/>
+            <path d="M23.8 40c-5.6 0-8.8-3.1-9.8-7.4l9.7-5.6 9.9 5.7c-1.2 4.2-4.6 7.3-9.8 7.3Z"/>
+            <path d="M10.6 30.5C7.8 25.7 9 21.4 12.2 18.4l9.8 5.7v11.4c-4.3 1-8.8-.4-11.4-5Z"/>
+            <path d="M12.9 14.2c2.8-4.8 7.1-6 11.3-4.7v11.3l-9.8 5.7c-3-3.1-4-7.7-1.5-12.3Z"/>
+          </g>
+        </svg>
+      </span>
+    `;
+  }
+
+  if (platformKey === "gemini") {
+    return `
+      <span class="platform-logo platform-logo--gemini" aria-hidden="true">
+        <svg viewBox="0 0 48 48" role="img">
+          <path fill="currentColor" d="M24 2c3.1 11.2 10.8 18.9 22 22-11.2 3.1-18.9 10.8-22 22C20.9 34.8 13.2 27.1 2 24 13.2 20.9 20.9 13.2 24 2Z"/>
+        </svg>
+      </span>
+    `;
+  }
+
+  if (platformKey === "claude") {
+    return `<span class="platform-logo platform-logo--claude" aria-hidden="true">AI</span>`;
+  }
+
+  return `
+    <span class="platform-logo platform-logo--grok" aria-hidden="true">
+      <svg viewBox="0 0 48 48" role="img">
+        <circle cx="24" cy="24" r="13" fill="none" stroke="#fff" stroke-width="4"/>
+        <path d="M12 36 36 12" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+        <path d="M29 12h7v7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  `;
+}
+
 function getSelectedDayIndex(days = getLast7Days()) {
   const selectedIndex = days.indexOf(selectedDateKey);
   return selectedIndex === -1 ? days.length - 1 : selectedIndex;
@@ -160,12 +203,13 @@ function renderPlatformList(dayData, totalSeconds) {
     const row = document.createElement("div");
     row.className = "platform-row";
     row.innerHTML = `
-      <div class="platform-row-header">
+      ${getPlatformIcon(key)}
+      <div class="platform-content">
         <span class="platform-name">${config.label}</span>
         <span class="platform-time">${formatTime(seconds)}</span>
-      </div>
-      <div class="platform-bar-track">
-        <div class="platform-bar-fill" style="width: ${pct}%; background: ${config.color};"></div>
+        <div class="platform-bar-track">
+          <div class="platform-bar-fill" style="width: ${pct}%; background: ${config.color};"></div>
+        </div>
       </div>
     `;
     container.appendChild(row);
@@ -187,7 +231,7 @@ function renderWeeklyChart(screentime) {
   days.forEach((dateKey, index) => {
     const total = totals[index];
     const heightPct = (total / maxTotal) * 100;
-    const fillHeight = Math.max(heightPct * 0.44, total > 0 ? 2 : 0);
+    const fillHeight = Math.max(heightPct * 0.82, total > 0 ? 10 : 0);
     const isToday = dateKey === today;
     const isSelected = dateKey === selectedDateKey;
 
@@ -196,7 +240,7 @@ function renderWeeklyChart(screentime) {
     col.className = `bar-col${isSelected ? " is-selected" : ""}`;
     col.setAttribute("aria-label", `View ${formatDateLabel(dateKey)}`);
     col.innerHTML = `
-      <div class="bar-col-inner" style="height: 44px;">
+      <div class="bar-col-inner">
         <div class="bar-col-fill ${isToday ? "is-today" : ""}" style="height: ${fillHeight}px;"></div>
       </div>
       <div class="bar-col-day ${isToday ? "is-today" : ""}">${shortDay(dateKey)}</div>
@@ -220,7 +264,7 @@ function renderDashboard() {
 
   updateHeaderDate(selectedDateKey);
   renderDayControls();
-  document.getElementById("total-label").textContent = isToday ? "Today's Total" : "Selected Day Total";
+  document.getElementById("total-label").textContent = isToday ? "Today's Total" : "Day Total";
   document.getElementById("total-time").textContent = formatTotalTime(totalSeconds);
 
   renderPlatformList(selectedDayData, totalSeconds);
