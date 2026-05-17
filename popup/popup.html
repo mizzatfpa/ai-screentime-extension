@@ -14,7 +14,12 @@
     </header>
 
     <div class="total-card">
-      <div class="total-label">Today's Total</div>
+      <div class="day-nav" aria-label="Day navigation">
+        <button class="day-nav-btn" id="prev-day-btn" type="button">Prev</button>
+        <span class="day-nav-date" id="selected-day-label"></span>
+        <button class="day-nav-btn" id="next-day-btn" type="button">Next</button>
+      </div>
+      <div class="total-label" id="total-label">Today's Total</div>
       <div class="total-time" id="total-time">0h 0m</div>
     </div>
 

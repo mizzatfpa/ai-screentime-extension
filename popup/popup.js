@@ -23,6 +23,8 @@ const PLATFORMS = {
 
 const PLATFORM_KEYS = Object.keys(PLATFORMS);
 const MAX_DAYS = 7;
+let selectedDateKey = getTodayKey();
+let currentScreentime = {};
 
 function formatTime(seconds) {
   if (seconds < 60) {
@@ -63,6 +65,22 @@ function shortDay(dateKey) {
   return days[new Date(`${dateKey}T00:00:00`).getDay()];
 }
 
+function formatDateLabel(dateKey) {
+  return new Date(`${dateKey}T00:00:00`).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+function formatSelectedDayLabel(dateKey) {
+  if (dateKey === getTodayKey()) {
+    return "Today";
+  }
+
+  return `${shortDay(dateKey)} ${formatDateLabel(dateKey)}`;
+}
+
 function createEmptyDayData() {
   return PLATFORM_KEYS.reduce((acc, key) => {
     acc[key] = 0;
@@ -88,12 +106,55 @@ function getDayTotal(dayData) {
   return Object.values(dayData).reduce((acc, value) => acc + value, 0);
 }
 
-function renderPlatformList(todayData, totalSeconds) {
+function getSelectedDayIndex(days = getLast7Days()) {
+  const selectedIndex = days.indexOf(selectedDateKey);
+  return selectedIndex === -1 ? days.length - 1 : selectedIndex;
+}
+
+function clampSelectedDate() {
+  const days = getLast7Days();
+  const selectedIndex = getSelectedDayIndex(days);
+  selectedDateKey = days[selectedIndex];
+}
+
+function renderDayControls() {
+  const days = getLast7Days();
+  const selectedIndex = getSelectedDayIndex(days);
+  const prevButton = document.getElementById("prev-day-btn");
+  const nextButton = document.getElementById("next-day-btn");
+
+  document.getElementById("selected-day-label").textContent = formatSelectedDayLabel(selectedDateKey);
+  prevButton.disabled = selectedIndex <= 0;
+  nextButton.disabled = selectedIndex >= days.length - 1;
+}
+
+function selectDay(dateKey) {
+  const days = getLast7Days();
+  if (!days.includes(dateKey)) {
+    return;
+  }
+
+  selectedDateKey = dateKey;
+  renderDashboard();
+}
+
+function navigateSelectedDay(offset) {
+  const days = getLast7Days();
+  const selectedIndex = getSelectedDayIndex(days);
+  const nextIndex = selectedIndex + offset;
+  if (nextIndex < 0 || nextIndex >= days.length) {
+    return;
+  }
+
+  selectDay(days[nextIndex]);
+}
+
+function renderPlatformList(dayData, totalSeconds) {
   const container = document.getElementById("platform-list");
   container.innerHTML = "";
 
   for (const [key, config] of Object.entries(PLATFORMS)) {
-    const seconds = todayData[key] || 0;
+    const seconds = dayData[key] || 0;
     const pct = totalSeconds > 0 ? (seconds / totalSeconds) * 100 : 0;
 
     const row = document.createElement("div");
@@ -128,26 +189,42 @@ function renderWeeklyChart(screentime) {
     const heightPct = (total / maxTotal) * 100;
     const fillHeight = Math.max(heightPct * 0.44, total > 0 ? 2 : 0);
     const isToday = dateKey === today;
+    const isSelected = dateKey === selectedDateKey;
 
-    const col = document.createElement("div");
-    col.className = "bar-col";
+    const col = document.createElement("button");
+    col.type = "button";
+    col.className = `bar-col${isSelected ? " is-selected" : ""}`;
+    col.setAttribute("aria-label", `View ${formatDateLabel(dateKey)}`);
     col.innerHTML = `
       <div class="bar-col-inner" style="height: 44px;">
         <div class="bar-col-fill ${isToday ? "is-today" : ""}" style="height: ${fillHeight}px;"></div>
       </div>
       <div class="bar-col-day ${isToday ? "is-today" : ""}">${shortDay(dateKey)}</div>
     `;
+    col.addEventListener("click", () => selectDay(dateKey));
     container.appendChild(col);
   });
 }
 
-function updateHeaderDate() {
+function updateHeaderDate(dateKey) {
   const headerDate = document.getElementById("header-date");
-  headerDate.textContent = new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric"
-  });
+  headerDate.textContent = formatDateLabel(dateKey);
+}
+
+function renderDashboard() {
+  clampSelectedDate();
+
+  const selectedDayData = sanitizeDayData(currentScreentime[selectedDateKey]);
+  const totalSeconds = getDayTotal(selectedDayData);
+  const isToday = selectedDateKey === getTodayKey();
+
+  updateHeaderDate(selectedDateKey);
+  renderDayControls();
+  document.getElementById("total-label").textContent = isToday ? "Today's Total" : "Selected Day Total";
+  document.getElementById("total-time").textContent = formatTotalTime(totalSeconds);
+
+  renderPlatformList(selectedDayData, totalSeconds);
+  renderWeeklyChart(currentScreentime);
 }
 
 function flushLiveSession() {
@@ -186,18 +263,11 @@ async function init() {
   await flushLiveSession();
 
   const { screentime: storedScreentime } = await chrome.storage.local.get("screentime");
-  const screentime = storedScreentime && typeof storedScreentime === "object" ? storedScreentime : {};
-  const today = getTodayKey();
-  const todayData = sanitizeDayData(screentime[today]);
+  currentScreentime = storedScreentime && typeof storedScreentime === "object" ? storedScreentime : {};
+  renderDashboard();
 
-  updateHeaderDate();
-
-  const totalSeconds = getDayTotal(todayData);
-  document.getElementById("total-time").textContent = formatTotalTime(totalSeconds);
-
-  renderPlatformList(todayData, totalSeconds);
-  renderWeeklyChart(screentime);
-
+  document.getElementById("prev-day-btn").onclick = () => navigateSelectedDay(-1);
+  document.getElementById("next-day-btn").onclick = () => navigateSelectedDay(1);
   document.getElementById("reset-btn").onclick = () => {
     resetToday().catch((error) => console.error("Failed to reset today's data", error));
   };
